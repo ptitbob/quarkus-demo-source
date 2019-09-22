@@ -1,15 +1,12 @@
 package fr.sihm.demo.domain;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
-public class City {
-
-  @Id
-  @Column(name = "id")
-  public Long id;
+public class City extends PanacheEntity {
 
   @Column(name = "insee")
   public String inseeId;
