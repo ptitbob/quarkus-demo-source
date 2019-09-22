@@ -1,6 +1,5 @@
 package fr.sihm.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Column;
