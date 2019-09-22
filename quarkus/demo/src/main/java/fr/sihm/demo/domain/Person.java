@@ -5,9 +5,11 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@SequenceGenerator(name="person_sequence",sequenceName="person_sequence", initialValue=200, allocationSize=10)
 public class Person extends PanacheEntity {
 
 	@NotBlank
@@ -15,11 +17,9 @@ public class Person extends PanacheEntity {
 	public String login;
 
 	@Column(name = "firstname")
-	@JsonProperty("prenom")
 	public String firstname;
 
 	@Column(name = "lastname")
-	@JsonProperty("nom")
 	public String lastname;
 
 }
