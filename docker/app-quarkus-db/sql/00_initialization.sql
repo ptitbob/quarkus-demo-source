@@ -2,12 +2,14 @@ drop table if exists person;
 drop sequence if exists person_sequence;
 
 create sequence person_sequence start 100 cache 10;
+CREATE SEQUENCE hibernate_sequence START 1;
 
 create table person (
   id bigint not null default nextval('person_sequence'),
   login varchar(100) not null,
   firstname varchar(100),
   lastname varchar(100),
+  active boolean,
   creator varchar(100) ,
   created timestamp ,
   modificator varchar(100),
