@@ -6,7 +6,9 @@ import io.quarkus.panache.common.Sort;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -44,5 +46,39 @@ public class PersonController {
 		}
 		return Response.status(Response.Status.BAD_REQUEST).entity("Personne déjà existante").build();
 	}
+
+	@PATCH
+	@Path(("{login}"))
+	@Transactional
+	public Response updatePerson(
+		@PathParam("login") String login,
+		@Valid Person personToUpdate
+	) {
+		if (!login.equals(personToUpdate.login)) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Le login de l'entité doit être celui du path").build();
+		}
+		Person person = Person.find("login", login).firstResult();
+		if (person != null) {
+			person.firstname = personToUpdate.firstname;
+			person.lastname = personToUpdate.lastname;
+			person.persist();
+			return Response.ok(person).build();
+		}
+		return Response.status(Response.Status.NOT_FOUND).entity("Personne non trouvée").build();
+	}
+
+	@DELETE
+	@Path(("{login}"))
+	@Transactional
+	public Response deletePerson(
+		@PathParam("login") String login
+	) {
+		Person person = Person.find("login", login).firstResult();
+		if (person != null) {
+			person.delete();
+		}
+		return Response.ok().build();
+	}
+
 
 }
