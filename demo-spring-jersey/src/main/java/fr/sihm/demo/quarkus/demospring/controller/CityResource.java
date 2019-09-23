@@ -3,6 +3,7 @@ package fr.sihm.demo.quarkus.demospring.controller;
 
 import fr.sihm.demo.quarkus.demospring.domain.City;
 import fr.sihm.demo.quarkus.demospring.service.CityService;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -14,6 +15,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Component
 @Path("villes")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
@@ -21,7 +23,6 @@ public class CityResource {
 
   private final CityService cityService;
 
-  @Inject
   public CityResource(CityService cityService) {
     this.cityService = cityService;
   }
