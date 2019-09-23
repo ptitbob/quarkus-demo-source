@@ -20,4 +20,8 @@ public class CityService {
     return cityRepository.findAll();
   }
 
+  public City getByInseeId(String inseeId) {
+    return cityRepository.findByInseeId(inseeId);
+  }
+
 }
