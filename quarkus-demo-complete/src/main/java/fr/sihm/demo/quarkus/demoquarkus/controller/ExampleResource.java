@@ -1,4 +1,4 @@
-package fr.sihm.demo.quarkus.demoquarkus;
+package fr.sihm.demo.quarkus.demoquarkus.controller;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
