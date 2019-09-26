@@ -2,6 +2,9 @@ package fr.sihm.demo.quarkus.demospring.service;
 
 import fr.sihm.demo.quarkus.demospring.domain.City;
 import fr.sihm.demo.quarkus.demospring.repository.CityRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 
@@ -16,8 +19,8 @@ public class CityService {
     this.cityRepository = cityRepository;
   }
 
-  public List<City> getAll() {
-    return cityRepository.findAll();
+  public Page<City> getAll(@PageableDefault  Pageable pageable) {
+    return cityRepository.findAll(pageable);
   }
 
   public City getByInseeId(String inseeId) {
