@@ -3,10 +3,13 @@ package fr.sihm.demo.quarkus.demospring.controller;
 
 import fr.sihm.demo.quarkus.demospring.domain.City;
 import fr.sihm.demo.quarkus.demospring.service.CityService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,8 +31,24 @@ public class CityResource {
   }
 
   @GET
-  public Response getAll() {
-    return Response.ok().entity(cityService.getAll()).build();
+  public Response getAll(
+      @QueryParam("page") @DefaultValue("0") int page,
+      @QueryParam("size") @DefaultValue("20") int pageSize
+
+  ) {
+    Pageable pageable = PageRequest.of(page, pageSize);
+    Page<City> cityPage = cityService.getAll(pageable);
+    Response.ResponseBuilder response;
+    if (cityPage.getTotalPages() == 1) {
+      response = Response.ok(cityPage.getContent());
+    } else {
+      response = Response.status(Response.Status.PARTIAL_CONTENT).entity(cityPage.getContent());
+    }
+    response.header("x-total-page", cityPage.getTotalPages());
+    response.header("x-total-element", cityPage.getTotalElements());
+    response.header("x-current-page", cityPage.getPageable().getPageNumber());
+    response.header("x-page-size", cityPage.getPageable().getPageSize());
+    return response.build();
   }
 
   @GET
