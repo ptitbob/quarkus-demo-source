@@ -3,11 +3,11 @@
 # executer l'image de la base de données
 # docker run -i -d -p 5432:5432 --name app-quarkus-db --network=quarkus_net sihm/app-quarkus-db:1.0
 # Contruire l'image
-# docker build -f src/main/docker/Dockerfile.native.multi . -t sihm/quarkus-demo-native:1.0
+# docker build -f src/main/docker/Dockerfile.jvm.multi . -t sihm/quarkus-demo-jvm:1.0
 # Executer l'image
-# docker run -i -d --rm -p 8080:8080 --name quarkus-native --network=quarkus_net --link app-quarkus-db:app-quarkus-db sihm/quarkus-demo-native:1.0
+# docker run -i -d --rm -p 8080:8080 --name quarkus-jvm --network=quarkus_net --link app-quarkus-db:app-quarkus-db sihm/quarkus-demo-jvm:1.0
 # Arreter le container
-# docker container stop quarkus-native
+# docker container stop quarkus-jvm
 
 # FROM quay.io/quarkus/centos-quarkus-maven:19.3.0-java11 AS build
 FROM quay.io/quarkus/centos-quarkus-maven:19.2.1 AS build
@@ -17,12 +17,12 @@ RUN chown -R quarkus /usr/src/app
 USER quarkus
 RUN mkdir src
 COPY pom.xml /usr/src/app
-RUN mvn -Pnative dependency:go-offline
+RUN mvn dependency:go-offline
 
 # Cette partie est seulement pour gagner du temps pour la démo
 COPY src/main/docker/static/resources /usr/src/app/src/main/resources
 COPY src/main/docker/static/java /usr/src/app/src/main/java
-RUN mvn -f /usr/src/app/pom.xml -Pnative package -DskipTests
+RUN mvn -f /usr/src/app/pom.xml package -DskipTests
 USER root
 RUN rm -rf /usr/src/app/src/main/java && rm -rf /usr/src/app/src/main/resources
 USER quarkus
@@ -30,11 +30,11 @@ USER quarkus
 
 COPY src/main/resources /usr/src/app/src/main/resources
 COPY src/main/java /usr/src/app/src/main/java
-RUN mvn -f /usr/src/app/pom.xml -Pnative clean package -DskipTests
+RUN mvn -f /usr/src/app/pom.xml clean package -DskipTests
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal
-WORKDIR /work/
-COPY --from=build /usr/src/app/target/*-runner /work/application
-RUN chmod 775 /work
-EXPOSE 8080
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+FROM fabric8/java-alpine-openjdk8-jre
+ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV AB_ENABLED=jmx_exporter
+COPY --from=build /usr/src/app/target/lib/* /deployments/lib/
+COPY --from=build /usr/src/app/target/*-runner.jar /deployments/app.jar
+ENTRYPOINT [ "/deployments/run-java.sh" ]
