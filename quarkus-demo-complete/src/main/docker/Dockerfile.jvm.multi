@@ -15,7 +15,6 @@ WORKDIR /usr/src/app
 USER root
 RUN chown -R quarkus /usr/src/app
 USER quarkus
-RUN mkdir src
 COPY pom.xml /usr/src/app
 RUN mvn dependency:go-offline
 
