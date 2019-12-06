@@ -22,4 +22,4 @@ ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","cfr.sihm.demo.quarkus.demospringmvc.DemoSpringMvcApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","fr.sihm.demo.quarkus.demospringmvc.DemoSpringMvcApplication"]
