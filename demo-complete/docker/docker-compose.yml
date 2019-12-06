@@ -1,0 +1,16 @@
+version: '3'
+networks:
+  quarkus_net:
+    external: true
+
+services:
+  # Bases de donnée
+  app-quarkus-db:
+    build:
+      context: ./app-quarkus-db/
+    image: shipstone/quarkus-db:1.0
+    container_name: quarkus-db
+    ports:
+      - 5432:5432
+    networks:
+      - quarkus_net
