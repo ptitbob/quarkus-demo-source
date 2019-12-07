@@ -1,4 +1,4 @@
-package fr.sihm.ping.configuration.health;
+package org.shipstone.ping.configuration.health;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;

@@ -1,4 +1,4 @@
-package fr.sihm.ping;
+package org.shipstone.ping;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
