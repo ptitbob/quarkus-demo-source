@@ -10,7 +10,7 @@ public class PingResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
+    public String ping() {
         return "pong";
     }
 }
