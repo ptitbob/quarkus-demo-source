@@ -16,6 +16,9 @@
         <module>
             ping-spring
         </module>
+        <module>
+            city-quarkus
+        </module>
     </modules>
 
 </project>

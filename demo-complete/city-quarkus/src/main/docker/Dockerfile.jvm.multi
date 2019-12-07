@@ -1,0 +1,27 @@
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.1 AS build
+WORKDIR /usr/src/app
+USER root
+RUN chown -R quarkus /usr/src/app
+USER quarkus
+COPY pom.xml /usr/src/app
+RUN mvn dependency:go-offline
+
+# Cette partie est seulement pour gagner du temps pour la démo
+COPY src/main/docker/static/resources /usr/src/app/src/main/resources
+COPY src/main/docker/static/java /usr/src/app/src/main/java
+RUN mvn -f /usr/src/app/pom.xml package -DskipTests
+USER root
+RUN rm -rf /usr/src/app/src/main/java && rm -rf /usr/src/app/src/main/resources
+USER quarkus
+# Cette partie est seulement pour gagner du temps pour la démo
+
+COPY src/main/resources /usr/src/app/src/main/resources
+COPY src/main/java /usr/src/app/src/main/java
+RUN mvn -f /usr/src/app/pom.xml clean package -DskipTests
+
+FROM fabric8/java-alpine-openjdk8-jre
+ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV AB_ENABLED=jmx_exporter
+COPY --from=build /usr/src/app/target/lib/* /deployments/lib/
+COPY --from=build /usr/src/app/target/*-runner.jar /deployments/app.jar
+ENTRYPOINT [ "/deployments/run-java.sh" ]

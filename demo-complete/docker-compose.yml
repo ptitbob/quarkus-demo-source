@@ -47,3 +47,32 @@ services:
     networks:
       - quarkus_net
 
+  # City
+  city-quarkus-jvm:
+    build:
+      context: city-quarkus
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/city-quarkus-jvm:1.0
+    container_name: city-quarkus-jvm
+    ports:
+      - 8094:8080
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - quarkus_net
+  city-quarkus-native:
+    build:
+      context: city-quarkus
+      dockerfile: src/main/docker/Dockerfile.native.multi
+    image: sihm/city-quarkus-native:1.0
+    container_name: city-quarkus-native
+    ports:
+      - 8084:8080
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - quarkus_net
