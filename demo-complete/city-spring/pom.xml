@@ -8,10 +8,10 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.shipstone.quarkus.ping</groupId>
-	<artifactId>ping-spring</artifactId>
+	<groupId>org.shipstone.quarkus.city</groupId>
+	<artifactId>city-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ping-spring</name>
+	<name>city-spring</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -25,9 +25,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

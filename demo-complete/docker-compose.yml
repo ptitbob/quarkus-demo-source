@@ -48,6 +48,20 @@ services:
       - quarkus_net
 
   # City
+  city-spring-jvm:
+    build:
+      context: city-spring
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/city-spring-jvm:1.0
+    container_name: city-spring-jvm
+    ports:
+      - 8085:8080
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - quarkus_net
   city-quarkus-jvm:
     build:
       context: city-quarkus
