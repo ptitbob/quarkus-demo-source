@@ -19,6 +19,9 @@
         <module>
             city-quarkus
         </module>
+        <module>
+            city-spring
+        </module>
     </modules>
 
 </project>
