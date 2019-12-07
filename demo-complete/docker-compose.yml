@@ -8,10 +8,19 @@ services:
   db:
     build:
       context: docker/app-quarkus-db
-    image: sihm/db:1.0
-    container_name: demo-db
+    image: sihm/db-insee:1.0
+    container_name: demo-db-insee
     ports:
       - 5432:5432
+    networks:
+      - quarkus_net
+  db-person:
+    build:
+      context: docker/app-quarkus-db-person
+    image: sihm/db-person:1.0
+    container_name: demo-db-person
+    ports:
+      - 5433:5432
     networks:
       - quarkus_net
 

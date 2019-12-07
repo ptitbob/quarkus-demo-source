@@ -1,8 +1,5 @@
 START TRANSACTION;
 
-create unique index UX_PERSON
-  on person(login);
-
 create index IX_ZIPCODE_INSEE
   on zipcode(city_insee);
 
