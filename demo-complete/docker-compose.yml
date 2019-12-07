@@ -16,6 +16,16 @@ services:
       - quarkus_net
 
   # ping
+  ping-spring-jvm:
+    build:
+      context: ping-spring
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/ping-spring-jvm:1.0
+    container_name: ping-spring-jvm
+    ports:
+      - 8087:8087
+    networks:
+      - quarkus_net
   ping-quarkus-jvm:
     build:
       context: ping-quarkus
