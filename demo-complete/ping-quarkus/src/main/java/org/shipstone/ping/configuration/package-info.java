@@ -1,1 +1,1 @@
-package fr.sihm.ping.configuration;
+package org.shipstone.ping.configuration;
