@@ -1,0 +1,49 @@
+version: '3'
+networks:
+  quarkus_net:
+    external: true
+
+services:
+  # Bases de donnée
+  db:
+    build:
+      context: docker/app-quarkus-db
+    image: sihm/db:1.0
+    container_name: demo-db
+    ports:
+      - 5432:5432
+    networks:
+      - quarkus_net
+
+  # ping
+  ping-spring-jvm:
+    build:
+      context: ping-spring
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/ping-spring-jvm:1.0
+    container_name: ping-spring-jvm
+    ports:
+      - 8087:8087
+    networks:
+      - quarkus_net
+  ping-quarkus-jvm:
+    build:
+      context: ping-quarkus
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/ping-quarkus-jvm:1.0
+    container_name: ping-quarkus-jvm
+    ports:
+      - 8096:8086
+    networks:
+      - quarkus_net
+  ping-quarkus-native:
+    build:
+      context: ping-quarkus
+      dockerfile: src/main/docker/Dockerfile.native.multi
+    image: sihm/ping-quarkus-native:1.0
+    container_name: ping-quarkus-native
+    ports:
+      - 8086:8086
+    networks:
+      - quarkus_net
+
