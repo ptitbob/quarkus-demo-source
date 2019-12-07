@@ -8,7 +8,7 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>fr.sihm.pring</groupId>
+	<groupId>org.shipstone.quarkus.pring</groupId>
 	<artifactId>ping-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ping-spring</name>
