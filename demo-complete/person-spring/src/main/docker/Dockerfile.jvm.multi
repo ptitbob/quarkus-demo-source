@@ -10,13 +10,13 @@ RUN ./mvnw dependency:go-offline
 
 COPY src/main/java /workdir/server/src/main/java
 COPY src/main/resources /workdir/server/src/main/resources
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests -Pprod
 RUN mkdir -p target/dependency
 WORKDIR /workdir/server/target/dependency
 RUN jar -xf ../*.jar
 
 FROM openjdk:11.0.5-jre-slim-buster
-EXPOSE 8087
+EXPOSE 80
 VOLUME /tmp
 ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
