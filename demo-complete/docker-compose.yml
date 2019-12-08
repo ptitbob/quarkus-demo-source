@@ -111,10 +111,12 @@ services:
       - 8083:8080
     links:
       - db-person
-      - city-quarkus-native
+      - city-spring-jvm
+      - ping-spring-jvm
     depends_on:
       - db-person
-      - city-quarkus-native
+      - city-spring-jvm
+      - ping-spring-jvm
     networks:
       - quarkus_net
   person-quarkus-jvm:
@@ -127,10 +129,12 @@ services:
       - 8092:8080
     links:
       - db-person
-      - city-quarkus-native
+      - city-quarkus-jvm
+      - ping-quarkus-jvm
     depends_on:
       - db-person
-      - city-quarkus-native
+      - city-quarkus-jvm
+      - ping-quarkus-jvm
     networks:
       - quarkus_net
   person-quarkus-native:
@@ -144,8 +148,10 @@ services:
     links:
       - db-person
       - city-quarkus-native
+      - ping-quarkus-native
     depends_on:
       - db-person
       - city-quarkus-native
+      - ping-quarkus-native
     networks:
       - quarkus_net
