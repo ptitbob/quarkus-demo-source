@@ -99,3 +99,53 @@ services:
       - db
     networks:
       - quarkus_net
+
+  # People
+  person-spring-jvm:
+    build:
+      context: person-spring
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/person-spring-jvm:1.0
+    container_name: person-spring-jvm
+    ports:
+      - 8083:8080
+    links:
+      - db-person
+      - city-quarkus-native
+    depends_on:
+      - db-person
+      - city-quarkus-native
+    networks:
+      - quarkus_net
+  person-quarkus-jvm:
+    build:
+      context: person-quarkus
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/person-quarkus-jvm:1.0
+    container_name: person-quarkus-jvm
+    ports:
+      - 8092:8080
+    links:
+      - db-person
+      - city-quarkus-native
+    depends_on:
+      - db-person
+      - city-quarkus-native
+    networks:
+      - quarkus_net
+  person-quarkus-native:
+    build:
+      context: person-quarkus
+      dockerfile: src/main/docker/Dockerfile.native.multi
+    image: sihm/person-quarkus-native:1.0
+    container_name: person-quarkus-native
+    ports:
+      - 8082:8080
+    links:
+      - db-person
+      - city-quarkus-native
+    depends_on:
+      - db-person
+      - city-quarkus-native
+    networks:
+      - quarkus_net
