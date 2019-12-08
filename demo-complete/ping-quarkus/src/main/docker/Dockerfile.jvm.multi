@@ -35,4 +35,5 @@ ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jb
 ENV AB_ENABLED=jmx_exporter
 COPY --from=build /usr/src/app/target/lib/* /deployments/lib/
 COPY --from=build /usr/src/app/target/*-runner.jar /deployments/app.jar
+EXPOSE 80
 ENTRYPOINT [ "/deployments/run-java.sh" ]

@@ -8,10 +8,19 @@ services:
   db:
     build:
       context: docker/app-quarkus-db
-    image: sihm/db:1.0
-    container_name: demo-db
+    image: sihm/db-insee:1.0
+    container_name: demo-db-insee
     ports:
       - 5432:5432
+    networks:
+      - quarkus_net
+  db-person:
+    build:
+      context: docker/app-quarkus-db-person
+    image: sihm/db-person:1.0
+    container_name: demo-db-person
+    ports:
+      - 5433:5432
     networks:
       - quarkus_net
 
@@ -33,7 +42,7 @@ services:
     image: sihm/ping-quarkus-jvm:1.0
     container_name: ping-quarkus-jvm
     ports:
-      - 8096:8086
+      - 8096:80
     networks:
       - quarkus_net
   ping-quarkus-native:
@@ -43,7 +52,7 @@ services:
     image: sihm/ping-quarkus-native:1.0
     container_name: ping-quarkus-native
     ports:
-      - 8086:8086
+      - 8086:80
     networks:
       - quarkus_net
 
@@ -69,7 +78,7 @@ services:
     image: sihm/city-quarkus-jvm:1.0
     container_name: city-quarkus-jvm
     ports:
-      - 8094:8080
+      - 8094:80
     links:
       - db
     depends_on:
@@ -83,10 +92,66 @@ services:
     image: sihm/city-quarkus-native:1.0
     container_name: city-quarkus-native
     ports:
-      - 8084:8080
+      - 8084:80
     links:
       - db
     depends_on:
       - db
+    networks:
+      - quarkus_net
+
+  # People
+  person-spring-jvm:
+    build:
+      context: person-spring
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/person-spring-jvm:1.0
+    container_name: person-spring-jvm
+    ports:
+      - 8083:8080
+    links:
+      - db-person
+      - city-spring-jvm
+      - ping-spring-jvm
+    depends_on:
+      - db-person
+      - city-spring-jvm
+      - ping-spring-jvm
+    networks:
+      - quarkus_net
+  person-quarkus-jvm:
+    build:
+      context: person-quarkus
+      dockerfile: src/main/docker/Dockerfile.jvm.multi
+    image: sihm/person-quarkus-jvm:1.0
+    container_name: person-quarkus-jvm
+    ports:
+      - 8092:80
+    links:
+      - db-person
+      - city-quarkus-jvm
+      - ping-quarkus-jvm
+    depends_on:
+      - db-person
+      - city-quarkus-jvm
+      - ping-quarkus-jvm
+    networks:
+      - quarkus_net
+  person-quarkus-native:
+    build:
+      context: person-quarkus
+      dockerfile: src/main/docker/Dockerfile.native.multi
+    image: sihm/person-quarkus-native:1.0
+    container_name: person-quarkus-native
+    ports:
+      - 8082:80
+    links:
+      - db-person
+      - city-quarkus-native
+      - ping-quarkus-native
+    depends_on:
+      - db-person
+      - city-quarkus-native
+      - ping-quarkus-native
     networks:
       - quarkus_net

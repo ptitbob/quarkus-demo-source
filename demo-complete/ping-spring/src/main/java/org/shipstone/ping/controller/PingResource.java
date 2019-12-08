@@ -10,7 +10,7 @@ public class PingResource {
 
   @GetMapping
   public String ping() {
-    return "pong";
+    return "pong - spring -jvm";
   }
 
 }

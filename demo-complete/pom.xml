@@ -22,6 +22,12 @@
         <module>
             city-spring
         </module>
+        <module>
+            person-quarkus
+        </module>
+        <module>
+            person-spring
+        </module>
     </modules>
 
 </project>
