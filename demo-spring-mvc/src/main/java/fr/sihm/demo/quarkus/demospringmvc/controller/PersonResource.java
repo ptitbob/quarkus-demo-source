@@ -38,7 +38,7 @@ public class PersonResource {
 
   @GetMapping("{login}")
   public Person getPersonByLogin(
-      @RequestParam("login") String login
+      @PathVariable("login") String login
   ) {
     return personService.findByLogin(login);
   }
