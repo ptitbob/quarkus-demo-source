@@ -12,7 +12,7 @@ services:
     image: sihm/ping-spring-jvm:1.0
     container_name: ping-spring-jvm
     ports:
-      - 8087:8087
+      - 8087:8080
     networks:
       - quarkus_net
   ping-quarkus-jvm:
@@ -22,7 +22,7 @@ services:
     image: sihm/ping-quarkus-jvm:1.0
     container_name: ping-quarkus-jvm
     ports:
-      - 8096:8086
+      - 8096:80
     networks:
       - quarkus_net
   ping-quarkus-native:
@@ -32,7 +32,7 @@ services:
     image: sihm/ping-quarkus-native:1.0
     container_name: ping-quarkus-native
     ports:
-      - 8086:8086
+      - 8086:80
     networks:
       - quarkus_net
 
