@@ -1,3 +1,6 @@
+INSERT INTO person (login, firstname, lastname, active, creator, created)
+VALUES ('turing-a', 'Alan', 'Turing', true, 'lui', now());
+
 -- CHEFLIEU - Chef-lieu d'arrondissement, de département, de région ou bureau centralisateur
 insert into code(famille, code, libelle) values ('CHEFLIEU', '0', 'commune non chef-lieu');
 insert into code(famille, code, libelle) values ('CHEFLIEU', '1', 'commune bureau centralisateur de canton');

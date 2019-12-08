@@ -11,6 +11,7 @@ create table person (
   firstname varchar(100),
   lastname varchar(100),
   active boolean,
+  city_insee varchar(6),
   creator varchar(100) ,
   created timestamp ,
   modificator varchar(100),
