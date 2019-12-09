@@ -29,19 +29,13 @@ public class PingRepository {
     UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
         .fromHttpUrl(pingServerUrl);
     try {
-      ResponseEntity<String> responseEntity = restTemplate.exchange(
-          uriComponentsBuilder.build().toUri(), GET, null, String.class
-      );
-      if (responseEntity.hasBody()) {
-        return responseEntity.getBody();
-      }
+      return restTemplate.getForObject(uriComponentsBuilder.build().toUri(), String.class);
     } catch (HttpStatusCodeException e) {
       if (HttpStatus.NOT_FOUND.equals(e.getStatusCode())) {
         throw new Exception("Erreur de recupération");
       }
       throw new Exception("Erreur serveur...");
     }
-    return null;
   }
 
 }
