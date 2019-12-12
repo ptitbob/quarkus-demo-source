@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: ping-quarkus-native
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: ping-quarkus-native
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ping-quarkus-native
+  name: ping-quarkus-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: ping-quarkus-native
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: ping-quarkus-native
+    spec:
+      containers:
+      - image: sihm/ping-quarkus-native:1.0
+        name: ping-quarkus-native
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
