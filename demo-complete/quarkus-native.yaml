@@ -1,57 +1,52 @@
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  name: ping-quarkus-native
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    run: ping-quarkus-native
-status:
-  loadBalancer: {}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: ping-quarkus-native
+    app: ping-quarkus-native
   name: ping-quarkus-native
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: ping-quarkus-native
+      app: ping-quarkus-native
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: ping-quarkus-native
+        app: ping-quarkus-native
     spec:
       containers:
-      - image: sihm/ping-quarkus-native:1.0
-        name: ping-quarkus-native
-        ports:
-        - containerPort: 80
-        resources: {}
+        - image: sihm/ping-quarkus-native:1.0
+          name: ping-quarkus-native
+          resources: {}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
-  name: city-quarkus-native
+  creationTimestamp: "2019-12-12T22:09:06Z"
+  labels:
+    app: ping-quarkus-native
+  name: ping-quarkus-native
+  namespace: default
+  resourceVersion: "7000"
+  selfLink: /api/v1/namespaces/default/services/ping-quarkus-native
+  uid: 03918b14-1d2c-11ea-bc9a-025000000001
 spec:
+  clusterIP: 10.107.213.216
+  externalTrafficPolicy: Cluster
   ports:
-    - port: 80
+    - name: 80-80
+      nodePort: 30808
+      port: 80
       protocol: TCP
-      targetPort: 8081
+      targetPort: 80
   selector:
-    run: city-quarkus-native
+    app: ping-quarkus-native
+  sessionAffinity: None
+  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
@@ -60,40 +55,50 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: city-quarkus-native
+    app: city-quarkus-native
   name: city-quarkus-native
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: city-quarkus-native
+      app: city-quarkus-native
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: city-quarkus-native
+        app: city-quarkus-native
     spec:
       containers:
         - image: sihm/city-quarkus-native:1.0
           name: city-quarkus-native
-          ports:
-            - containerPort: 80
           resources: {}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
-  name: person-quarkus-native
+  creationTimestamp: "2019-12-12T22:09:07Z"
+  labels:
+    app: city-quarkus-native
+  name: city-quarkus-native
+  namespace: default
+  resourceVersion: "7009"
+  selfLink: /api/v1/namespaces/default/services/city-quarkus-native
+  uid: 03ff8289-1d2c-11ea-bc9a-025000000001
 spec:
+  clusterIP: 10.111.45.113
+  externalTrafficPolicy: Cluster
   ports:
-    - port: 80
+    - name: 80-80
+      nodePort: 30902
+      port: 80
       protocol: TCP
       targetPort: 80
   selector:
-    run: person-quarkus-native
+    app: city-quarkus-native
+  sessionAffinity: None
+  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
@@ -102,24 +107,49 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: person-quarkus-native
+    app: person-quarkus-native
   name: person-quarkus-native
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: person-quarkus-native
+      app: person-quarkus-native
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: person-quarkus-native
+        app: person-quarkus-native
     spec:
       containers:
         - image: sihm/person-quarkus-native:1.0
           name: person-quarkus-native
-          ports:
-            - containerPort: 80
           resources: {}
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2019-12-12T22:09:06Z"
+  labels:
+    app: person-quarkus-native
+  name: person-quarkus-native
+  namespace: default
+  resourceVersion: "7006"
+  selfLink: /api/v1/namespaces/default/services/person-quarkus-native
+  uid: 03cd8dc1-1d2c-11ea-bc9a-025000000001
+spec:
+  clusterIP: 10.109.178.36
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 31882
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: person-quarkus-native
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

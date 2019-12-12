@@ -1,57 +1,52 @@
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  name: ping-spring
-spec:
-  ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    run: ping-spring
-status:
-  loadBalancer: {}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: ping-spring
-  name: ping-spring
+    app: ping-spring-jvm
+  name: ping-spring-jvm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: ping-spring
+      app: ping-spring-jvm
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: ping-spring
+        app: ping-spring-jvm
     spec:
       containers:
-      - image: sihm/ping-spring-jvm:1.0
-        name: ping-spring
-        ports:
-        - containerPort: 8080
-        resources: {}
+        - image: sihm/ping-spring-jvm:1.0
+          name: ping-spring-jvm
+          resources: {}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
-  name: city-spring-jvm
+  creationTimestamp: "2019-12-12T22:07:34Z"
+  labels:
+    app: ping-spring-jvm
+  name: ping-spring-jvm
+  namespace: default
+  resourceVersion: "6884"
+  selfLink: /api/v1/namespaces/default/services/ping-spring-jvm
+  uid: ccfdb416-1d2b-11ea-bc9a-025000000001
 spec:
+  clusterIP: 10.97.14.215
+  externalTrafficPolicy: Cluster
   ports:
-    - port: 80
+    - name: 80-80
+      nodePort: 30159
+      port: 80
       protocol: TCP
       targetPort: 80
   selector:
-    run: city-spring-jvm
+    app: ping-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
@@ -60,40 +55,50 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: city-spring-jvm
+    app: city-spring-jvm
   name: city-spring-jvm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: city-spring-jvm
+      app: city-spring-jvm
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: city-spring-jvm
+        app: city-spring-jvm
     spec:
       containers:
         - image: sihm/city-spring-jvm:1.0
           name: city-spring-jvm
-          ports:
-            - containerPort: 80
           resources: {}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
-  name: person-spring-jvm
+  creationTimestamp: "2019-12-12T22:07:34Z"
+  labels:
+    app: city-spring-jvm
+  name: city-spring-jvm
+  namespace: default
+  resourceVersion: "6883"
+  selfLink: /api/v1/namespaces/default/services/city-spring-jvm
+  uid: ccf7aa73-1d2b-11ea-bc9a-025000000001
 spec:
+  clusterIP: 10.105.147.211
+  externalTrafficPolicy: Cluster
   ports:
-    - port: 80
+    - name: 80-80
+      nodePort: 32666
+      port: 80
       protocol: TCP
       targetPort: 80
   selector:
-    run: person-spring-jvm
+    app: city-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
@@ -102,24 +107,49 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: person-spring-jvm
+    app: person-spring-jvm
   name: person-spring-jvm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: person-spring-jvm
+      app: person-spring-jvm
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: person-spring-jvm
+        app: person-spring-jvm
     spec:
       containers:
         - image: sihm/person-spring-jvm:1.0
           name: person-spring-jvm
-          ports:
-            - containerPort: 80
           resources: {}
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2019-12-12T22:07:34Z"
+  labels:
+    app: person-spring-jvm
+  name: person-spring-jvm
+  namespace: default
+  resourceVersion: "6888"
+  selfLink: /api/v1/namespaces/default/services/person-spring-jvm
+  uid: cd0b1176-1d2b-11ea-bc9a-025000000001
+spec:
+  clusterIP: 10.106.17.4
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 32067
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: person-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
