@@ -39,5 +39,87 @@ spec:
         - containerPort: 8080
         resources: {}
 status: {}
-## TODO : Ajouter city
-## TODO : Ajouter person
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: city-spring-jvm
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    run: city-spring-jvm
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: city-spring-jvm
+  name: city-spring-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: city-spring-jvm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: city-spring-jvm
+    spec:
+      containers:
+        - image: sihm/city-spring-jvm:1.0
+          name: city-spring-jvm
+          ports:
+            - containerPort: 80
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: person-spring-jvm
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    run: person-spring-jvm
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: person-spring-jvm
+  name: person-spring-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: person-spring-jvm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: person-spring-jvm
+    spec:
+      containers:
+        - image: sihm/person-spring-jvm:1.0
+          name: person-spring-jvm
+          ports:
+            - containerPort: 80
+          resources: {}
+status: {}

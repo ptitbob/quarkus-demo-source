@@ -5,9 +5,9 @@ metadata:
   name: ping-quarkus-native
 spec:
   ports:
-  - port: 8080
+  - port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 80
   selector:
     run: ping-quarkus-native
 status:
@@ -36,8 +36,90 @@ spec:
       - image: sihm/ping-quarkus-native:1.0
         name: ping-quarkus-native
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources: {}
 status: {}
-## TODO : Ajouter city
-## TODO : Ajouter person
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: city-quarkus-native
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    run: city-quarkus-native
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: city-quarkus-native
+  name: city-quarkus-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: city-quarkus-native
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: city-quarkus-native
+    spec:
+      containers:
+        - image: sihm/city-quarkus-native:1.0
+          name: city-quarkus-native
+          ports:
+            - containerPort: 80
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: person-quarkus-native
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    run: person-quarkus-native
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: person-quarkus-native
+  name: person-quarkus-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: person-quarkus-native
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: person-quarkus-native
+    spec:
+      containers:
+        - image: sihm/person-quarkus-native:1.0
+          name: person-quarkus-native
+          ports:
+            - containerPort: 80
+          resources: {}
+status: {}
