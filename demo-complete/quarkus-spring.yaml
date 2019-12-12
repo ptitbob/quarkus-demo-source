@@ -39,3 +39,5 @@ spec:
         - containerPort: 8080
         resources: {}
 status: {}
+## TODO : Ajouter city
+## TODO : Ajouter person
