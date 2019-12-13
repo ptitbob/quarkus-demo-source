@@ -40,7 +40,7 @@ spec:
   ports:
     - name: 80-80
       nodePort: 30159
-      port: 80
+      port: 8090
       protocol: TCP
       targetPort: 80
   selector:
@@ -92,7 +92,7 @@ spec:
   ports:
     - name: 80-80
       nodePort: 32666
-      port: 80
+      port: 8091
       protocol: TCP
       targetPort: 80
   selector:
@@ -144,7 +144,7 @@ spec:
   ports:
     - name: 80-80
       nodePort: 32067
-      port: 80
+      port: 8092
       protocol: TCP
       targetPort: 80
   selector:

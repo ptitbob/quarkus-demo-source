@@ -92,7 +92,7 @@ spec:
   ports:
     - name: 80-80
       nodePort: 30902
-      port: 80
+      port: 81
       protocol: TCP
       targetPort: 80
   selector:
@@ -144,7 +144,7 @@ spec:
   ports:
     - name: 80-80
       nodePort: 31882
-      port: 80
+      port: 82
       protocol: TCP
       targetPort: 80
   selector:
