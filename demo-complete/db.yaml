@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-db-insee
+  name: demo-db-insee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-db-insee
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: demo-db-insee
+    spec:
+      containers:
+      - image: sihm/db-insee:1.0
+        name: db-insee
+        resources: {}
+status: {}

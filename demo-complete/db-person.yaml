@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-db-person
+  name: demo-db-person
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-db-person
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: demo-db-person
+    spec:
+      containers:
+      - image: sihm/db-person:1.0
+        name: db-person
+        resources: {}
+status: {}
