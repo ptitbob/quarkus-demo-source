@@ -22,3 +22,22 @@ spec:
         name: db-person
         resources: {}
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: db-person
+  name: db-person
+spec:
+  ports:
+    - name: 5432-5432
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: db-person
+  type: ClusterIP
+status:
+  loadBalancer: {}
