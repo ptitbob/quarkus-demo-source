@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app: demo-db-person
@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: demo-db-person
-  strategy: {}
   template:
     metadata:
       labels:
@@ -19,7 +18,7 @@ spec:
       - image: sihm/db-person:1.0
         name: db-person
         resources: {}
-status: {}
+  serviceName: db-person
 ---
 apiVersion: v1
 kind: Service

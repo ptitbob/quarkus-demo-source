@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app: db
@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: db
-  strategy: {}
   template:
     metadata:
       labels:
@@ -19,7 +18,7 @@ spec:
       - image: sihm/db-insee:1.0
         name: db-insee
         resources: {}
-status: {}
+  serviceName: db
 ---
 apiVersion: v1
 kind: Service
