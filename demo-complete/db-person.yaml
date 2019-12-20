@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: demo-db-person
+  name: demo-db-person
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-db-person
+  template:
+    metadata:
+      labels:
+        app: demo-db-person
+    spec:
+      containers:
+      - image: sihm/db-person:1.0
+        name: db-person
+        resources: {}
+  serviceName: db-person
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db-person
+  name: db-person
+spec:
+  ports:
+    - name: 5432-5432
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: db-person
+  type: ClusterIP
+status:
+  loadBalancer: {}

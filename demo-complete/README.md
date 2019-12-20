@@ -33,3 +33,11 @@ Lancement de la demo ping : `docker-compose -f docker-compose-ping.yml up -d`
 Arret : `docker-compose -f docker-compose-ping.yml stop`
 
 Nettoyage des container : `docker-compose -f docker-compose-ping.yml rm -f`
+
+Start des bases de données via kubernetes : `kubectl create -f db.yaml && kubectl create -f db-person.yaml`
+
+Start du mode quarkus natif : `kubectl create -f quarkus-native.yaml` 
+Start du mode quarkus jvm : `kubectl create -f quarkus-jvm.yaml` 
+Start du mode spring : `kubectl create -f quarkus-spring.yaml`
+
+Pour l'arrêt c'est la même chose en remplaçant le verbe create par delete. 

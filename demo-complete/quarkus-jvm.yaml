@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ping-quarkus-jvm
+  name: ping-quarkus-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-quarkus-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ping-quarkus-jvm
+    spec:
+      containers:
+        - image: sihm/ping-quarkus-jvm:1.0
+          name: ping-quarkus-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ping-quarkus-jvm
+  name: ping-quarkus-jvm
+  namespace: default
+spec:
+  clusterIP: 10.100.167.214
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 32236
+      port: 8080
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: ping-quarkus-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: city-quarkus-jvm
+  name: city-quarkus-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-quarkus-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: city-quarkus-jvm
+    spec:
+      containers:
+        - image: sihm/city-quarkus-jvm:1.0
+          name: city-quarkus-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: city-quarkus-jvm
+  name: city-quarkus-jvm
+  namespace: default
+spec:
+  clusterIP: 10.101.25.161
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 31036
+      port: 8081
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: city-quarkus-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: person-quarkus-jvm
+  name: person-quarkus-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: person-quarkus-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: person-quarkus-jvm
+    spec:
+      containers:
+        - image: sihm/person-quarkus-jvm:1.0
+          name: person-quarkus-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: person-quarkus-jvm
+  name: person-quarkus-jvm
+  namespace: default
+spec:
+  clusterIP: 10.108.23.106
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 32401
+      port: 8082
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: person-quarkus-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

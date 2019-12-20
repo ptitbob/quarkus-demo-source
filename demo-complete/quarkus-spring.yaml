@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ping-spring-jvm
+  name: ping-spring-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-spring-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ping-spring-jvm
+    spec:
+      containers:
+        - image: sihm/ping-spring-jvm:1.0
+          name: ping-spring-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ping-spring-jvm
+  name: ping-spring-jvm
+  namespace: default
+spec:
+  clusterIP: 10.97.14.215
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 30159
+      port: 8090
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: ping-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: city-spring-jvm
+  name: city-spring-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-spring-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: city-spring-jvm
+    spec:
+      containers:
+        - image: sihm/city-spring-jvm:1.0
+          name: city-spring-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: city-spring-jvm
+  name: city-spring-jvm
+  namespace: default
+spec:
+  clusterIP: 10.105.147.211
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 32666
+      port: 8091
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: city-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: person-spring-jvm
+  name: person-spring-jvm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: person-spring-jvm
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: person-spring-jvm
+    spec:
+      containers:
+        - image: sihm/person-spring-jvm:1.0
+          name: person-spring-jvm
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: person-spring-jvm
+  name: person-spring-jvm
+  namespace: default
+spec:
+  clusterIP: 10.106.17.4
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 80-80
+      nodePort: 32067
+      port: 8092
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: person-spring-jvm
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
